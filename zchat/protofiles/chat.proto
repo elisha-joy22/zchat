@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package zchat;
+
+
+import "google/protobuf/timestamp.proto";
+
+
+service CreateUser{
+    rpc CreateUser(User) returns (UserCreated){}
+}
+
+message User{
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+
+}
+
+message UserCreated{
+    string confirmation = 1;
+    User user = 2;
+}
+
+
+
+service SendMessage{
+    rpc CreateChat(CreateChatRequest) returns (Response){}
+    rpc SendMessage(Message) returns (Response){}
+}
+
+message CreateChatRequest{
+    User user1 = 1;
+    User user2 = 2;
+}
+
+message Chat{
+    int32 chat_id = 1;
+    string chat_name = 2;
+    int32 user1 = 3;
+    int32 user2 = 4;
+}
+
+message Message{
+    int32 chat_id = 1;
+    int32 sender_id = 2;
+    int32 receiver_id = 3;
+    int32 message_id = 4;
+    string text = 5;
+    google.protobuf.Timestamp timestamp = 6;
+}
+
+message Response{
+    string message=1;
+    string error=2;
+}
